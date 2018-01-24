@@ -1,6 +1,5 @@
 # guide
-Guide project
+Guide project (rest-api)
 
 This is a guide project to make life easier for future projects!
-
-Manos
+It is a rest-api using spring boot.
