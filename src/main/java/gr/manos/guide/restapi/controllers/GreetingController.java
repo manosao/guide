@@ -4,6 +4,8 @@ import gr.manos.guide.restapi.models.Greeting;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,6 +30,12 @@ public class GreetingController {
 	public Greeting helloPersonOptional(@RequestParam(value="name", defaultValue="Anonymous") String name) {
 		Greeting greeting = Greeting.builder().message("Hello "+name+"!").build();
 		return greeting;
+	}
+	
+	@PostMapping(value="/custom")
+	public Greeting helloPersonPost(@RequestBody Greeting greeting) {
+		Greeting greetingResposne = Greeting.builder().message("Your greeting: "+greeting.getMessage() ).build();
+		return greetingResposne;
 	}
 
 }
