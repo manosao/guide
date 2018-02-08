@@ -2,6 +2,7 @@ package gr.manos.guide.restapi.controllers;
 
 import gr.manos.guide.restapi.models.Greeting;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class GreetingController {
 
 	@GetMapping(value="/world")
+//	@PreAuthorize("hasRole('ROLE_ADMIN')")
     public Greeting helloWorld() {
 		Greeting greeting = Greeting.builder().message("Hello World!").build();
         return greeting;
