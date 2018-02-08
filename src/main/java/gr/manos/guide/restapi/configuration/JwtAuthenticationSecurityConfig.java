@@ -10,12 +10,13 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-//@Configuration
-//@EnableWebSecurity
-//@EnableGlobalMethodSecurity(prePostEnabled = true)
+@Configuration
+@EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class JwtAuthenticationSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	public static final String SIGN_UP_URL = "/users/sign-up";
@@ -35,7 +36,12 @@ public class JwtAuthenticationSecurityConfig extends WebSecurityConfigurerAdapte
     
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().authorizeRequests()
+    	
+        http.csrf().disable()
+        // do not create session
+        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        
+        .and().authorizeRequests()
                 .antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
                 .anyRequest().authenticated()
                 .and()
