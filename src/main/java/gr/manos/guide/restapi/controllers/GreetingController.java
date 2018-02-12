@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class GreetingController {
 
 	@GetMapping(value="/world")
-//	@PreAuthorize("hasRole('ROLE_ADMIN')")
+//	@PreAuthorize("hasRole('ADMIN')")
     public Greeting helloWorld() {
 		Greeting greeting = Greeting.builder().message("Hello World!").build();
         return greeting;
