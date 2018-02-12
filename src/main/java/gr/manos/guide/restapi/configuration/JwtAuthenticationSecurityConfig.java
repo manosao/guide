@@ -53,9 +53,13 @@ public class JwtAuthenticationSecurityConfig extends WebSecurityConfigurerAdapte
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
       // Create a default account
       auth.inMemoryAuthentication()
-          .withUser("admin")
-          .password("admin")
-          .roles("ADMIN");
+          .withUser("user")
+          .password("user")
+          .roles("USER")
+          .and()
+	      .withUser("admin")
+	      .password("admin")
+	      .roles("ADMIN");
     }
     
 //    @Override
