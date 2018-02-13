@@ -1,6 +1,7 @@
 package gr.manos.guide.restapi.security.jwt2;
 
 import gr.manos.guide.restapi.models.SpringSecurityUser;
+import gr.manos.guide.restapi.models.User;
 import gr.manos.guide.restapi.repositories.UserRepository;
 
 import org.apache.commons.logging.Log;
@@ -32,7 +33,8 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        SpringSecurityUser springSecurityUser = userRepository.findByUsername(username);
+    	User user = userRepository.findByUsername(username);
+        SpringSecurityUser springSecurityUser = SpringSecurityUser.builder().id(user.getId()).username(user.getUsername()).password(user.getPassword()).build();
         if (springSecurityUser == null) {
             throw new UsernameNotFoundException(String.format("No user found with username '%s'.", username));
         } else {
@@ -60,7 +62,11 @@ public class CustomUserDetailsService implements UserDetailsService {
         SpringSecurityUser springSecurityUser = (SpringSecurityUser) loadUserByUsername(username);
 
         springSecurityUser.setPassword(passwordEncoder.encode(newPassword));
-        userRepository.save(springSecurityUser);
+        userRepository.save(User.builder()
+        		.username(springSecurityUser.getUsername())
+        		.password(springSecurityUser.getPassword())
+        		.build()
+        		);
 
     }
 }
