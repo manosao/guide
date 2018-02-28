@@ -2,6 +2,8 @@ package gr.manos.guide.restapi.controllers;
 
 import gr.manos.guide.restapi.models.Greeting;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,10 +17,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value="/greeting")
 public class GreetingController {
 
+	private static final Logger log = LoggerFactory.getLogger("GreetingLogger");
+	
 	@GetMapping(value="/world")
 //	@PreAuthorize("hasRole('ADMIN')")
     public Greeting helloWorld() {
 		Greeting greeting = Greeting.builder().message("Hello World!").build();
+		log.info(greeting.getMessage());
         return greeting;
     }
 	
